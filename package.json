@@ -1,0 +1,44 @@
+{
+  "name": "react-collection-view",
+  "version": "0.2.0",
+  "main": "./lib/collection.js",
+  "peerDependencies": {
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.9.0",
+    "husky": "^0.13.3",
+    "mocha": "^3.2.0",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "scripts": {
+    "prepush": "yarn build:demo && yarn build:lib",
+    "dev": "webpack-dev-server --config ./demo/webpack.config.js",
+    "build:demo": "webpack --config ./demo/webpack.config.js",
+    "build:lib": "babel src -d lib"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-1",
+      "react"
+    ]
+  }
+}
