@@ -95,29 +95,42 @@ class CollectionView extends Component {
     return (ownClient.top + scrollTop) - parentClient.top;
   }
 
-  toPixels(value, relation) {
+  toPixels(value, relation = 'width') {
     if (!isNaN(value)) {
       return value;
     }
-    const [, number, unit = 'px'] = /([0-9.]+)(.*)/.exec(value);
-    switch (unit.trim()) {
-      case '%': {
-        const parsed = parseFloat(number);
-        if (!this.sizeCache[relation || 'width']) {
-          this.sizeCache[relation || 'width'] = [];
-        }
-        if (this.sizeCache[relation || 'width'][parsed]) {
-          return this.sizeCache[relation || 'width'][parsed];
-        }
-        const { innerWidth } = this.state;
-        const result = ((relation || innerWidth) / 100) * parseFloat(number);
-        this.sizeCache[relation || 'width'][parsed] = result;
-        return result;
-      }
-      default: {
-        return parseFloat(number);
-      }
+    if (!this.sizeCache[relation]) {
+      this.sizeCache[relation] = {};
     }
+    if (this.sizeCache[relation][value]) {
+      return this.sizeCache[relation][value];
+    }
+    const matchGroups = value.replace(/ /g, '').split(/([0-9.]+[^+-]+[+-]?)/g).filter(a => !!a);
+    let result = 0;
+    let operator = '+';
+    matchGroups.forEach((match, index) => {
+      const currentOperator = operator;
+      if (index < matchGroups.length - 1) {
+        operator = match.slice(-1);
+        match = match.slice(0, -1);
+      }
+      const [, number, unit = 'px'] = /([0-9.]+)(.*)/.exec(match);
+      let parsed = parseFloat(number);
+      switch (unit.trim()) {
+        case '%': {
+          const { innerWidth } = this.state;
+          parsed = ((relation == 'width' ? innerWidth : relation) / 100) * parseFloat(number);
+        }
+        default: {}
+      }
+      if (currentOperator === '+') {
+        result += parsed;
+      } else if (currentOperator === '-') {
+        result -= parsed;
+      }
+    });
+    this.sizeCache[relation][value] = result;
+    return result;
   }
 
   handleResize() {

@@ -51,7 +51,7 @@ ReactDOM.render(
       delayFirstRender
       renderItem={renderItem}
       items={items}
-      getHeight={() => `${(Math.random() * 50) + 50}%`}
+      getHeight={() => `${(Math.random() * 50) + 50}% + 30px`}
       getWidth={() => `${(Math.random() * 40) + 10}%`}
       prerender="100%"
     />,
