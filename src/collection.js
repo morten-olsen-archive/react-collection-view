@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-
-import withScrollApi from './scrollable/with-scroll-api.jsx';
+import { withScrollApi } from 'react-scroll-view';
 
 class CollectionView extends Component {
 
@@ -119,9 +118,12 @@ class CollectionView extends Component {
       switch (unit.trim()) {
         case '%': {
           const { innerWidth } = this.state;
-          parsed = ((relation == 'width' ? innerWidth : relation) / 100) * parseFloat(number);
+          parsed = ((relation === 'width' ? innerWidth : relation) / 100) * parseFloat(number);
+          break;
         }
-        default: {}
+        default: {
+          break;
+        }
       }
       if (currentOperator === '+') {
         result += parsed;

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createScrollContainer } from 'react-scroll-view';
 
-import CollectionView from '../src/collection.jsx';
-import scrollContainer from '../src/scrollable/scroll-container.jsx';
+import CollectionView from '../src/collection.js';
 
 const items = new Array(10000).fill(undefined).map((item, index) => ({
   index,
@@ -21,7 +21,7 @@ const renderItem = (item, index, { key, width, height }) => (
   </div>
 );
 
-const Wrapper = scrollContainer(({ children }) => (
+const Wrapper = createScrollContainer()(({ children }) => (
   <div
     style={{
       position: 'fixed',

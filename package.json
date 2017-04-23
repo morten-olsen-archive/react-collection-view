@@ -1,6 +1,6 @@
 {
   "name": "react-collection-view",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "./lib/collection.js",
   "peerDependencies": {
     "prop-types": "^15.5.8",
@@ -44,5 +44,8 @@
       "stage-1",
       "react"
     ]
+  },
+  "dependencies": {
+    "react-scroll-view": "0.2.5"
   }
 }
