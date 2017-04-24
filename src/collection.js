@@ -78,6 +78,12 @@ class CollectionView extends Component {
     scroll.addEventListener('scroll', this.handleScroll);
   }
 
+  componentWillReceiveProps(next) {
+    this.calculatePositions(() => {
+      this.handleScroll();
+    }, next);
+  }
+
   componentWillUnmount() {
     const { scroll } = this.props;
     scroll.addEventListener('scroll', this.handleScroll);
@@ -180,12 +186,12 @@ class CollectionView extends Component {
     }
   }
 
-  calculatePositions(callback) {
+  calculatePositions(callback, next) {
     const {
       getHeight,
       getWidth,
       items,
-    } = this.props;
+    } = (next || this.props);
     const {
       innerWidth,
     } = this.state;
