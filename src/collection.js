@@ -17,12 +17,12 @@ class CollectionView extends Component {
         PropTypes.number,
       ]),
       items: PropTypes.arrayOf(PropTypes.object),
-      getHeight: PropTypes.oneOfType([
+      getHeight: PropTypes.oneOfType([ // eslint-disable-line
         PropTypes.number,
         PropTypes.string,
         PropTypes.func,
       ]).isRequired,
-      getWidth: PropTypes.oneOfType([
+      getWidth: PropTypes.oneOfType([ // eslint-disable-line
         PropTypes.number,
         PropTypes.string,
         PropTypes.func,
@@ -80,7 +80,10 @@ class CollectionView extends Component {
 
   componentWillReceiveProps(next) {
     this.calculatePositions(() => {
-      this.handleScroll();
+      const node = next.scroll.getScrollContainer();
+      this.handleScroll({
+        target: node,
+      });
     }, next);
   }
 
@@ -117,7 +120,7 @@ class CollectionView extends Component {
       const currentOperator = operator;
       if (index < matchGroups.length - 1) {
         operator = match.slice(-1);
-        match = match.slice(0, -1);
+        match = match.slice(0, -1); // eslint-disable-line
       }
       const [, number, unit = 'px'] = /([0-9.]+)(.*)/.exec(match);
       let parsed = parseFloat(number);
@@ -282,7 +285,7 @@ class CollectionView extends Component {
           height: totalHeight,
         }}
       >
-        {(!!visibleCount && delayFirstRender) && items.map(this.renderItem)}
+        {(visibleCount > 0 || !delayFirstRender) && items.map(this.renderItem)}
       </div>
     );
   }
